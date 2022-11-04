@@ -3,6 +3,7 @@ package com.pranay.contactroom;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.pranay.contactroom.model.ContactViewModel;
 public class MainActivity extends AppCompatActivity {
     private static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
     private ActivityMainBinding binding;
+    private TextView textView;
 
 
     private ContactViewModel contactViewModel;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView=findViewById(R.id.textView);
 
 
         contactViewModel = new ViewModelProvider.AndroidViewModelFactory(MainActivity.this
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.append(" - ").append(contact.getName()).append(" Occupation: ").append(contact.getOccupation());
                 Log.d("TAG", "onCreate: " + contact.getName());
             }
+           textView.setText(builder.toString());
 
 
         });
@@ -55,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_CONTACT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Log.d("TAG", "onActivityResult: " + data.getStringExtra(NewContact.NAME_REPLY));
-        }
+            assert data != null;
+            String name = data.getStringExtra(NewContact.NAME_REPLY);
+            String occupation = data.getStringExtra(NewContact.OCCUPATION);
+            Contact contact = new Contact(name,occupation);
+
+            ContactViewModel.insert(contact);
+
+       }
     }
 }
