@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ContactRepository {
 
-    private ContactDao contactDao;
-    private LiveData<List<Contact>> allContacts;
+    private final ContactDao contactDao;
+    private final LiveData<List<Contact>> allContacts;
 
     public ContactRepository(Application application) {
         ContactRoomDatabase db = ContactRoomDatabase.getDataBase(application);

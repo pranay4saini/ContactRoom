@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    private OnContactClickListener contactClickListener;
+    private final OnContactClickListener contactClickListener;
     private final List<Contact> contactList;
     private final Context context;
 

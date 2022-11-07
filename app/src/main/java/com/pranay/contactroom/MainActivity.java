@@ -1,14 +1,14 @@
 package com.pranay.contactroom;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +19,12 @@ import com.pranay.contactroom.databinding.ActivityMainBinding;
 import com.pranay.contactroom.model.Contact;
 import com.pranay.contactroom.model.ContactViewModel;
 
-import java.util.List;
+
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnContactClickListener {
     private static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
+    public static final String CONTACT_ID = "contact_id";
     private ActivityMainBinding binding;
     private TextView textView;
     private RecyclerView recyclerView;
@@ -88,5 +89,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         Contact contact  = Objects.requireNonNull(contactViewModel.allContacts.getValue()).get(position);
 
+        Intent intent = new Intent(MainActivity.this,NewContact.class);
+        intent.putExtra(CONTACT_ID,contact.getId());
+        startActivity(intent);
+
+
     }
+
+
 }

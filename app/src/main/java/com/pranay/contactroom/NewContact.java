@@ -20,6 +20,7 @@ public class NewContact extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact);
         contactViewModel = new ViewModelProvider.AndroidViewModelFactory(NewContact.this
@@ -46,6 +47,13 @@ public class NewContact extends AppCompatActivity {
         });
 
 
-
+        Bundle data = getIntent().getExtras();
+        if(data != null){
+            int id = data.getInt(MainActivity.CONTACT_ID);
+            contactViewModel.get(id).observe(this, contact ->{
+                binding.enterName.setText(contact.getName());
+                binding.enterOccupation.setText(contact.getOccupation());
+            });
+        }
     }
 }

@@ -5,4 +5,6 @@
     <string name="button_save">Save</string>
     <string name="empty">Enter information\n</string>
     <string name="description_add_contact">Plus button icon\n</string>
+    <string name="update_button_text">Update</string>
+    <string name="delete_button_text">Delete</string>
 </resources>
