@@ -62,27 +62,11 @@ public class NewContact extends AppCompatActivity {
             finish();
 
         });
+        //Delete Button
+        binding.deleteButton.setOnClickListener(view -> edit(true));
 
         //Update Button
-        binding.updateButton.setOnClickListener(view -> {
-
-            int id = contactId;
-            String name = binding.enterName.getText().toString().trim();
-            String occupation = binding.enterOccupation.getText().toString().trim();
-            if(TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)){
-                Snackbar.make(binding.enterName,R.string.empty,Snackbar.LENGTH_SHORT)
-                        .show();
-            }else{
-                Contact contact = new Contact();
-                 contact.setId(id);
-                 contact.setName(name);
-                 contact.setOccupation(occupation);
-
-                 ContactViewModel.update(contact);
-                 finish();
-            }
-
-        });
+        binding.updateButton.setOnClickListener(view -> edit(false));
         if(isEdit){
             binding.saveButton.setVisibility(View.GONE);
         }else {
@@ -92,5 +76,23 @@ public class NewContact extends AppCompatActivity {
 
 
 
+    }
+
+    private void edit(Boolean isDelete) {
+        String name = binding.enterName.getText().toString().trim();
+        String occupation = binding.enterOccupation.getText().toString().trim();
+        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(occupation)){
+            Snackbar.make(binding.enterName,R.string.empty,Snackbar.LENGTH_SHORT)
+                    .show();
+        }else{
+            Contact contact = new Contact();
+            contact.setId(contactId);
+            contact.setName(name);
+            contact.setOccupation(occupation);
+            if(isDelete){ ContactViewModel.delete(contact);
+            } else{ ContactViewModel.update(contact);
+            }
+            finish();
+        }
     }
 }
