@@ -1,5 +1,6 @@
 package com.pranay.contactroom;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +20,9 @@ import com.pranay.contactroom.model.Contact;
 import com.pranay.contactroom.model.ContactViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnContactClickListener {
     private static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
     private ActivityMainBinding binding;
     private TextView textView;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         contactViewModel.getAllContacts().observe(MainActivity.this, contacts -> {
 
             //Set up adapter
-            recyclerViewAdapter = new RecyclerViewAdapter(contacts,MainActivity.this);
+            recyclerViewAdapter = new RecyclerViewAdapter(contacts, MainActivity.this, this);
             recyclerView.setAdapter(recyclerViewAdapter);
 
 
@@ -79,5 +81,12 @@ public class MainActivity extends AppCompatActivity {
             ContactViewModel.insert(contact);
 
        }
+    }
+
+    @Override
+    public void onContactClick(int position) {
+
+        Contact contact  = Objects.requireNonNull(contactViewModel.allContacts.getValue()).get(position);
+
     }
 }
